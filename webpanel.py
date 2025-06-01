@@ -150,7 +150,7 @@ def login_get(request: Request):
 async def login_post(request: Request):
     form = await request.form()
     password = form.get("password")
-    if password == "Wtpmjgda1!":
+    if password == "ВСТАВЬ_СВОЕ":               #########################АДМИН ПАРОЛЬ#######################
         request.session["user"] = True
         return RedirectResponse("/", status_code=302)
     else:
