@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>ВСТАВЬ СВОЕ — Вход</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-light: #f5f7fa;
+      --bg-dark:  #1e1e2f;
+      --text-light: #2a2a40;
+      --text-dark:  #ffffff;
+      --primary:   #7f5af0;
+      --primary-alt: #4b6cb7;
+      --danger:    #ef4444;
+      --radius:    12px;
+      --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --shadow-btn:  0 2px 8px rgba(74, 108, 255, 0.25);
+      --font-base:   'Rubik', sans-serif;
+      --gap:         16px;
+      --input-height: 42px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--font-base);
+    }
+
+    body {
+      background: var(--bg-light);
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: var(--gap);
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    .login-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-card);
+      padding: calc(var(--gap) * 1.5);
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    body.dark .login-card {
+      background: #2a2a40;
+    }
+
+    .login-header {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: var(--gap);
+      color: var(--primary-alt);
+    }
+    body.dark .login-header {
+      color: var(--primary);
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+    }
+
+    .login-form input[type="password"] {
+      height: var(--input-height);
+      padding: 0 14px;
+      font-size: 1rem;
+      border: 1.2px solid #ccc;
+      border-radius: 8px;
+      background: #fafbfc;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    body.dark .login-form input[type="password"] {
+      background: #1e1e2f;
+      border-color: #444;
+      color: #fff;
+    }
+    .login-form input[type="password"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(127, 90, 240, 0.2);
+      background: #fff;
+    }
+
+    .login-form button {
+      height: var(--input-height);
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-btn);
+      transition: background 0.2s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .login-form button:hover {
+      background: var(--primary-alt);
+      transform: scale(1.02);
+    }
+
+    .error {
+      background: #fff0f0;
+      color: var(--danger);
+      border-left: 4px solid #ffdada;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: var(--gap);
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        padding: var(--gap);
+      }
+      .login-header {
+        font-size: 1.4rem;
+      }
+      .login-form input[type="password"],
+      .login-form button {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-header">🛡️ ВСТАВЬ СВОЕ — Вход</div>
+    <form method="post" class="login-form" autocomplete="off">
+      <input
+        type="password"
+        name="password"
+        placeholder="Введите пароль"
+        required
+        autocomplete="current-password"
+      />
+      <button type="submit">
+        <i class="bi bi-box-arrow-in-right"></i>
+        Войти
+      </button>
+    </form>
+    {% if error %}
+      <div class="error">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        {{ error }}
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    // Тёмная тема (если потребуется)
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>ВСТАВЬ СВОЕ — Вход</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body { background: #f7f7fa; font-family: 'SF Pro Display', 'Roboto', Arial, sans-serif; color: #222; margin: 0; padding: 0; }
+    .center-card {
+      max-width: 410px;
+      margin: 80px auto 0 auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 36px #007aff17, 0 1.5px 4px #b2b7c117;
+      padding: 40px 35px 30px 35px;
+      text-align: center;
+    }
+    .ios-navbar {
+      background: #fff;
+      box-shadow: 0 2px 16px rgba(32, 48, 64, 0.04);
+      padding: 18px 0 8px 0;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #222;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 28px;
+    }
+    h2 { font-size: 2rem; font-weight: 700; margin-bottom: 28px; color: #0a0a1b;}
+    form { display: flex; flex-direction: column; gap: 15px;}
+    input[type="password"] {
+      border: 1.4px solid #e3e6ea;
+      background: #fafbfc;
+      border-radius: 11px;
+      padding: 14px 15px;
+      font-size: 1.07rem;
+      outline: none;
+      transition: border 0.12s, box-shadow 0.13s;
+      box-shadow: none;
+      width: 100%;
+      margin-bottom: 0;
+      font-weight: 500;
+    }
+    input[type="password"]:focus {
+      border: 1.7px solid #007aff;
+      background: #fff;
+      box-shadow: 0 2px 14px #85bafd22;
+    }
+    button {
+      background: #007aff;
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 0;
+      font-size: 1.13rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(24, 148, 250, 0.12);
+      transition: background 0.18s, box-shadow 0.17s;
+      margin-top: 5px;
+    }
+    button:hover { background: #005ecb;}
+    .error {
+      margin-top: 12px;
+      background: #fff0f0;
+      color: #e84141;
+      border-radius: 11px;
+      padding: 10px 0;
+      font-weight: 500;
+      border-left: 4px solid #ffeaea;
+    }
+  </style>
+</head>
+<body>
+  <div class="ios-navbar">
+    <i class="bi bi-shield-lock" style="font-size:1.2em; color:#007aff;vertical-align:middle;"></i>
+    ВСТАВЬ СВОЕ — Вход в панель
+  </div>
+  <div class="center-card">
+    <h2>Вход в панель</h2>
+    <form method="post" autocomplete="off">
+      <input type="password" name="password" placeholder="Пароль" required autocomplete="current-password">
+      <button type="submit"><i class="bi bi-box-arrow-in-right"></i> Войти</button>
+    </form>
+    {% if error %}
+      <div class="error"><i class="bi bi-exclamation-circle"></i> {{ error }}</div>
+    {% endif %}
+  </div>
+</body>
+</html>
