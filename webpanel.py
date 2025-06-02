@@ -243,3 +243,46 @@ def download_config(kind: str, name: str, request: Request):
     filename = os.path.basename(path)
     headers = {"Content-Disposition": f"attachment; filename*=UTF-8''{urllib.parse.quote(filename)}"}
     return FileResponse(path, headers=headers, media_type="application/x-openvpn-profile")
+    
+@app.get("/download_wg/{type}/{name}")
+def download_wg_config(type: str, name: str, request: Request):
+    if not check_auth(request):
+        return RedirectResponse("/login")
+    name = name.strip()
+    # Определяем путь к файлу
+    if type == "vpn":
+        path = f"/root/antizapret/client/wireguard/vpn/ВСТАВЬ СВОЕ - Обычный VPN -{name}-wg.conf"
+    elif type == "antizapret":
+        path = f"/root/antizapret/client/wireguard/antizapret/ВСТАВЬ СВОЕ -{name}-wg.conf"
+    else:
+        return RedirectResponse("/")
+    # Генерация файла, если нет
+    if not os.path.exists(path):
+        subprocess.run(["/root/antizapret/client.sh", "4", name])
+    if not os.path.exists(path):
+        return RedirectResponse("/?error=not_found")
+    filename = os.path.basename(path)
+    headers = {"Content-Disposition": f"attachment; filename*=UTF-8''{urllib.parse.quote(filename)}"}
+    return FileResponse(path, headers=headers, media_type="text/plain")
+
+
+@app.get("/download_am/{type}/{name}")
+def download_amnezia_config(type: str, name: str, request: Request):
+    if not check_auth(request):
+        return RedirectResponse("/login")
+    name = name.strip()
+    # Определяем путь к файлу
+    if type == "vpn":
+        path = f"/root/antizapret/client/amneziawg/vpn/ВСТАВЬ СВОЕ - Обычный VPN -{name}-am.conf"
+    elif type == "antizapret":
+        path = f"/root/antizapret/client/amneziawg/antizapret/ВСТАВЬ СВОЕ -{name}-am.conf"
+    else:
+        return RedirectResponse("/")
+    # Генерация файла, если нет
+    if not os.path.exists(path):
+        subprocess.run(["/root/antizapret/client.sh", "4", name])
+    if not os.path.exists(path):
+        return RedirectResponse("/?error=not_found")
+    filename = os.path.basename(path)
+    headers = {"Content-Disposition": f"attachment; filename*=UTF-8''{urllib.parse.quote(filename)}"}
+    return FileResponse(path, headers=headers, media_type="text/plain")    
