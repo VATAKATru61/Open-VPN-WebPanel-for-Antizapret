@@ -475,60 +475,132 @@ body.dark .renew-days-input {
   </form>
 
   <!-- ======= ТАБЛИЦА ПОЛЬЗОВАТЕЛЕЙ ======= -->
-  <table>
-    <thead>
-      <tr>
-        <th>Профиль</th>
-        <th>User ID</th>
-        <th>Конфиги</th>
-        <th>Осталось</th>
-        <th>Удалить</th>
-        <th>Продлить</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for user in users %}
-      <tr class="fade-in">
-        <td>{{ user.profile_name }}</td>
-        <td>{{ user.user_id or "-" }}</td>
-        <td>
-          <a class="btn-action" href="/download/vpn/{{ user.profile_name }}">
-            <i class="bi bi-file-earmark-arrow-down"></i> VPN
-          </a>
-          <a class="btn-action" href="/download/antizapret/{{ user.profile_name }}">
-            <i class="bi bi-cloud-arrow-down"></i> AZ
-          </a>
-        </td>
-        <td>
-          {% if user.days_left is not none %}
-            {{ user.days_left }} дн.
-          {% else %}
-            ?
-          {% endif %}
-        </td>
-        <td>
-          <form method="post">
-            <input type="hidden" name="action" value="delete">
-            <input type="hidden" name="profile_name" value="{{ user.profile_name }}">
-            <button type="submit" class="btn-action red">
-              <i class="bi bi-trash"></i> Удалить
-            </button>
-          </form>
-        </td>
-        <td>
-          <form method="post" style="display:flex; gap:10px; justify-content:center; align-items:center;">
-            <input type="hidden" name="action" value="renew">
-            <input type="hidden" name="profile_name" value="{{ user.profile_name }}">
-            <input type="number" name="days" class="renew-days-input" placeholder="Дней" required>
-            <button type="submit" class="btn-action">
-              <i class="bi bi-arrow-repeat"></i> Продлить
-            </button>
-          </form>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<table>
+  <thead>
+    <tr>
+      <th>Профиль</th>
+      <th>User ID</th>
+      <th>Конфиги</th>
+      <th>Осталось</th>
+      <th>Удалить</th>
+      <th>Продлить</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr class="fade-in">
+      <td>{{ user.profile_name }}</td>
+      <td>{{ user.user_id or "-" }}</td>
+      <td>
+        <button class="btn-action toggle-configs-btn" type="button" style="min-width: 110px;">
+          <i class="bi bi-folder2-open"></i> Конфиги
+        </button>
+
+        <div class="configs-menu" style="display:none; margin-top:8px; text-align:left;">
+
+          <table style="width:100%; font-size:0.9rem; border-collapse: collapse;">
+            <thead>
+              <tr>
+                <th style="text-align:left; padding:4px 8px;">Тип</th>
+                <th style="padding:4px 8px;">Обычный VPN</th>
+                <th style="padding:4px 8px;">Antizapret</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align:left; padding:4px 8px;">OpenVPN</td>
+                <td style="padding:4px 8px;">
+                  <a class="btn-action small" href="/download/vpn/{{ user.profile_name }}">
+                    Скачать
+                  </a>
+                </td>
+                <td style="padding:4px 8px;">
+                  <a class="btn-action small" href="/download/antizapret/{{ user.profile_name }}">
+                    Скачать
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align:left; padding:4px 8px;">WireGuard</td>
+                <td style="padding:4px 8px;">
+                  <a class="btn-action small" href="/download_wg/vpn/{{ user.profile_name }}">
+                    Скачать
+                  </a>
+                </td>
+                <td style="padding:4px 8px;">
+                  <a class="btn-action small" href="/download_wg/antizapret/{{ user.profile_name }}">
+                    Скачать
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align:left; padding:4px 8px;">Amnezia</td>
+                <td style="padding:4px 8px;">
+                  <a class="btn-action small" href="/download_am/vpn/{{ user.profile_name }}">
+                    Скачать
+                  </a>
+                </td>
+                <td style="padding:4px 8px;">
+                  <a class="btn-action small" href="/download_am/antizapret/{{ user.profile_name }}">
+                    Скачать
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </td>
+      <td>
+        {% if user.days_left is not none %}
+          {{ user.days_left }} дн.
+        {% else %}
+          ?
+        {% endif %}
+      </td>
+      <td>
+        <form method="post">
+          <input type="hidden" name="action" value="delete">
+          <input type="hidden" name="profile_name" value="{{ user.profile_name }}">
+          <button type="submit" class="btn-action red">
+            <i class="bi bi-trash"></i> Удалить
+          </button>
+        </form>
+      </td>
+      <td>
+        <form method="post" style="display:flex; gap:10px; justify-content:center; align-items:center;">
+          <input type="hidden" name="action" value="renew">
+          <input type="hidden" name="profile_name" value="{{ user.profile_name }}">
+          <input type="number" name="days" class="renew-days-input" placeholder="Дней" required>
+          <button type="submit" class="btn-action">
+            <i class="bi bi-arrow-repeat"></i> Продлить
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<style>
+  .btn-action.small {
+    padding: 4px 8px;
+    font-size: 0.85rem;
+    min-width: 72px;
+    border-radius: 8px;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".toggle-configs-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        const menu = button.nextElementSibling;
+        menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+      });
+    });
+  });
+</script>
 
   {% if online_users %}
     <div class="online-block">
